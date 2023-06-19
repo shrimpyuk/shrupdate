@@ -33,7 +33,7 @@ for (( minor=0; minor<=2; minor++ )); do
     go build -ldflags="-X main.version=1.$minor" -o hello-updater src/hello-updater/main.go
 
     echo "Running go-update to make update available via example-server"; echo
-    go-selfupdate -o public/hello-updater/ hello-updater 1.$minor
+    go-shrupdate -o public/hello-updater/ hello-updater 1.$minor
 
     if (( $minor == 0 )); then
         echo "Copying version 1.0 to deployment so it can self-update"; echo

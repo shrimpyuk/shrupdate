@@ -1,29 +1,27 @@
 // Update protocol:
 //
-//   GET hk.heroku.com/hk/linux-amd64.json
+//	GET hk.heroku.com/hk/linux-amd64.json
 //
-//   200 ok
-//   {
-//       "Version": "2",
-//       "Sha256": "..." // base64
-//   }
+//	200 ok
+//	{
+//	    "Version": "2",
+//	    "Sha256": "..." // base64
+//	}
 //
 // then
 //
-//   GET hkpatch.s3.amazonaws.com/hk/1/2/linux-amd64
+//	GET hkpatch.s3.amazonaws.com/hk/1/2/linux-amd64
 //
-//   200 ok
-//   [bsdiff data]
+//	200 ok
+//	[bsdiff data]
 //
 // or
 //
-//   GET hkdist.s3.amazonaws.com/hk/2/linux-amd64.gz
+//	GET hkdist.s3.amazonaws.com/hk/2/linux-amd64.gz
 //
-//   200 ok
-//   [gzipped executable data]
-//
-//
-package selfupdate
+//	200 ok
+//	[gzipped executable data]
+package shrupdate
 
 import (
 	"bytes"
@@ -64,24 +62,24 @@ var defaultHTTPRequester = HTTPRequester{}
 //
 // Example:
 //
-//  updater := &selfupdate.Updater{
-//  	CurrentVersion: version,
-//  	ApiURL:         "http://updates.yourdomain.com/",
-//  	BinURL:         "http://updates.yourdownmain.com/",
-//  	DiffURL:        "http://updates.yourdomain.com/",
-//  	Dir:            "update/",
-//  	CmdName:        "myapp", // app name
-//  }
-//  if updater != nil {
-//  	go updater.BackgroundRun()
-//  }
+//	updater := &shrupdate.Updater{
+//		CurrentVersion: version,
+//		ApiURL:         "http://updates.yourdomain.com/",
+//		BinURL:         "http://updates.yourdownmain.com/",
+//		DiffURL:        "http://updates.yourdomain.com/",
+//		Dir:            "update/",
+//		CmdName:        "myapp", // app name
+//	}
+//	if updater != nil {
+//		go updater.BackgroundRun()
+//	}
 type Updater struct {
 	CurrentVersion string    // Currently running version.
 	ApiURL         string    // Base URL for API requests (json files).
 	CmdName        string    // Command name is appended to the ApiURL like http://apiurl/CmdName/. This represents one binary.
 	BinURL         string    // Base URL for full binary downloads.
 	DiffURL        string    // Base URL for diff downloads.
-	Dir            string    // Directory to store selfupdate state.
+	Dir            string    // Directory to store shrupdate state.
 	ForceCheck     bool      // Check for update regardless of cktime timestamp
 	CheckTime      int       // Time in hours before next check
 	RandomizeTime  int       // Time in hours to randomize with CheckTime
